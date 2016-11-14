@@ -1,6 +1,8 @@
 - ASP.NET / EF Core web application.
 
-Run Tracker allows users to log their runs and keep track of the mileage on their shoes.  If a shoe is no longer in use it can be retired and will no long be an option when creating a run. If no database or an empty data is found on start up one will be created and seeded with test data.
+Run Tracker allows users to log their runs and keep track of the mileage on their shoes.  If a shoe is no longer in 
+use it can be retired and will no long be an option when creating a run. If no database or an empty data is found 
+on start up one will be created and seeded with test data.
 
 Utilizes: 
     -C#
@@ -9,6 +11,8 @@ Utilizes:
     -Bootstrap
     -Chartist.js
 
-The core functionality of this web application has already been implemented. Users can create, view, sort, and alter both runs and shoes.
+The core functionality of this web application has already been implemented. Users can create, view, sort, 
+and alter both runs and shoes.
 
-Currently I am working on a detailed profile page that will display user data such as personal bests, total mileage, frequency and distance of runs etc.
+Currently I am working on a detailed profile page that will display user data such as personal bests, 
+total mileage, frequency and distance of runs etc.
