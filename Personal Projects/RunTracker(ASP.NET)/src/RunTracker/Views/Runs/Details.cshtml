@@ -1,0 +1,47 @@
+@model RunTracker.Models.Run
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<div>
+    <h2>Run Details</h2>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Distance)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Distance)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Pace)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pace)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+        <dt>
+            Shoe
+        </dt>
+        <dd>
+            @ViewData["ShoeName"]
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index" class="btn btn-default">Back</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+</div>

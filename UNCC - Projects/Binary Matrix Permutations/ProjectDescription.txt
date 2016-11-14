@@ -1,0 +1,6 @@
+This algorithm returns the number of possible permutations for a nxn binary matrix with the following characteristics:  
+
+	-A number t is provided indicating the number of 1’s that must occur in each row and each column. 
+	-No 1’s may occur in the main diagonal, meaning the diagonal beginning at A[0, 0] and ending at A[n-1, n-1].
+
+Please refer to Binary_Matrix_Permutations.pdf for a more detailed description.

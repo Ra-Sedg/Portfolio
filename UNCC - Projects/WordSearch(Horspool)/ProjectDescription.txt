@@ -1,0 +1,5 @@
+String search class that implements the Boyer-Moore-Horspool algorithm for finding 
+substrings within strings.
+
+This algorithm preprocesses the search string to produce a table containing, for each 
+symbol in the alphabet, the number of characters that can be safely skipped. 

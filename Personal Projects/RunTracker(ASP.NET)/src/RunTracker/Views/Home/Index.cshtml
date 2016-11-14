@@ -1,0 +1,56 @@
+﻿@model IEnumerable<RunTracker.Models.Run>
+
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_ChartLayout";
+}
+
+<h1>Landing page</h1>
+<h4>:{  Under Construction - Check out the rest of the site its better!</h4>
+<ul class="list-group">
+    <li>Profile Info</li>
+    <li>Personal Bests</li>
+    <li>Graphs!</li>
+</ul>
+
+<div class="btn-group">
+    <a asp-area="" asp-controller="Home" asp-route-id=0 asp-action="Index" class="btn btn-info">Last Month</a>
+    <a asp-area="" asp-controller="Home" asp-route-id=1 asp-action="Index" class="btn btn-info">Last 3 Montsh</a>
+    <a asp-area="" asp-controller="Home" asp-route-id=2 asp-action="Index" class="btn btn-info">All Time</a>
+</div>
+
+<div class="ct-chart ct-double-octave run_frequency"></div>
+
+
+
+<script type="text/javascript">
+
+    var dist = [];
+    var date = [];
+
+
+    @foreach(Run r in Model)
+    {
+        @:date.push("@r.Date.ToString("MM/dd/yy")");
+            @:dist.push("@r.Distance");
+
+    }
+
+    var data = {
+        labels: date,
+        series: [
+          dist
+        ]
+    };
+
+    var options = {
+        chartPadding: {
+            bottom: 50
+        }
+    };
+
+ new Chartist.Bar('.ct-chart', data, options);
+
+
+
+</script>

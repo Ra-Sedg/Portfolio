@@ -1,0 +1,2 @@
+A date class written in java, used to store and manipulate date objects. Converts
+dates to Julian day numbers to preform operations.
