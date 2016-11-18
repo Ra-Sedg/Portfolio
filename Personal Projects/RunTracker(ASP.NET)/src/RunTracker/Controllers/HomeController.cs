@@ -26,6 +26,9 @@ namespace RunTracker.Controllers
         {
             var Runs = GetUserRuns();
             var Today = DateTime.UtcNow;
+            var User = GetUser();
+            ViewBag.Name = User.FirstName + " " + User.LastName;
+           
 
 
             switch (id)
@@ -86,7 +89,7 @@ namespace RunTracker.Controllers
         {
             var Runs = GetUserRuns();
             var Today = DateTime.UtcNow;
-
+            
 
             
             switch (id)
@@ -117,6 +120,13 @@ namespace RunTracker.Controllers
         private string GetUserId()
         {
             return _manager.GetUserId(HttpContext.User);
+        }
+
+        private ApplicationUser GetUser()
+        {
+            return _context.ApplicationUser
+                    .Where(user => user.Id == GetUserId())
+                    .FirstOrDefault();
         }
 
         private List<Run> GetUserRuns()

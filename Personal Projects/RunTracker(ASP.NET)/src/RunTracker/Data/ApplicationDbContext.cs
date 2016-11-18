@@ -22,5 +22,7 @@ namespace RunTracker.Data
         public DbSet<Run> Run { get; set; }
 
         public DbSet<Shoe> Shoe { get; set; }
+
+        public DbSet<ApplicationUser> ApplicationUser { get; set; }
     }
 }
