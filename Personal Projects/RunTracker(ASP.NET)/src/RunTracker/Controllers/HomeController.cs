@@ -28,7 +28,6 @@ namespace RunTracker.Controllers
             var Today = DateTime.UtcNow;
 
 
-
             switch (id)
             {
                 case 0:
@@ -45,6 +44,9 @@ namespace RunTracker.Controllers
                 case 2:
                     break;
                 default:
+                    Runs = Runs
+                        .Where(r => r.Date.Year == Today.Year &&
+                                    r.Date.Month == Today.Month).ToList();
                     break;
 
             }
@@ -122,9 +124,7 @@ namespace RunTracker.Controllers
             return _context.Run
                    .Where(run => run.ApplicationUserId == GetUserId())
                    .ToList();
-        }
-
-        
+        }     
         
     }
 }

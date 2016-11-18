@@ -14,12 +14,17 @@
 </ul>
 
 <div class="btn-group">
+
     <a asp-area="" asp-controller="Home" asp-route-id=0 asp-action="Index" class="btn btn-info">Last Month</a>
     <a asp-area="" asp-controller="Home" asp-route-id=1 asp-action="Index" class="btn btn-info">Last 3 Months</a>
-    <a asp-area="" asp-controller="Home" asp-route-id=2 asp-action="Index" class="btn btn-info">All Time</a>
+    <a asp-area="" asp-controller="Home" asp-route-id=2 asp-action="Index" class="btn btn-info">All Time</a> 
+</div>
+<div class="pull-right">
+    <label class="label label-danger">Distance</label>
+    <label class="label label-success">Pace</label>
 </div>
 
-<div class="ct-chart ct-double-octave run_frequency"></div>
+<div class="ct-chart run_frequency"></div>
 
 
 
@@ -27,30 +32,40 @@
 
     var dist = [];
     var date = [];
+    var pace = [];
 
 
     @foreach(Run r in Model)
     {
         @:date.push("@r.Date.ToString("MM/dd/yy")");
-            @:dist.push("@r.Distance");
-
+        @:dist.push("@r.Distance");
+        @:pace.push("@r.PaceDouble");
+    
     }
 
     var data = {
         labels: date,
-        series: [
-          dist
-        ]
+        series: [dist, pace]
     };
 
     var options = {
+        axisX: {
+            labelOffset: {
+                x: 0,
+                y:10
+            }
+        },
+        axisY: {
+            offset: 0,
+        },
         chartPadding: {
-            bottom: 50
-        }
+            top: 20,
+            left: 28,
+            bottom: 20
+        },
+        showPoint: false,
+        height: 250     
     };
 
- new Chartist.Bar('.ct-chart', data, options);
-
-
-
+    new Chartist.Line('.ct-chart', data, options);
 </script>

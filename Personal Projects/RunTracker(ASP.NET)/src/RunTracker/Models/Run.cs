@@ -32,11 +32,21 @@ namespace RunTracker.Models
             }
         }
 
-        public string Pace
+        public double PaceDouble
         {
             get
             {
-                TimeSpan Pace = TimeSpan.FromSeconds((double)TotalSeconds / Distance);
+                double TotalMinutes = (double)TotalSeconds / 60;
+                
+                return TotalMinutes / Distance;
+            }
+        }
+
+        public string PaceString 
+        {
+            get
+            {
+                TimeSpan Pace = TimeSpan.FromSeconds(TotalSeconds / Distance);
                 return Pace.ToString(@"hh\:mm\:ss");
             }
         }

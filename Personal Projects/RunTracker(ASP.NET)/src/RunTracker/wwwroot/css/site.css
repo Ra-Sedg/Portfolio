@@ -119,11 +119,14 @@ td {
 
 }
 
-.ct-label{
-    font-size: 1em;
-    color: lightsteelblue;
-}
 
+
+.ct-label{
+  
+    color: lightsteelblue;
+    text-anchor: middle;
+    font-size: 13px;
+}
 
 .ct-label.ct-label.ct-horizontal {
   position: fixed;
@@ -131,5 +134,16 @@ td {
   text-align: right;
   transform-origin: 100% 0;
   transform: translate(-100%) rotate(-45deg);
-  text-anchor: middle
+  text-anchor: middle;
+  font-size: 12px;
+}
+
+
+.ct-series- .ct-line{
+    stroke-width: 3px;
+}
+
+.ct-series-b .ct-line{
+    stroke-width: 3px;
+    stroke: #5CB85C;
 }
