@@ -7,22 +7,26 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RunTracker.Data;
 using RunTracker.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace RunTracker.Controllers
 {
     public class ApplicationUsersController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _manager;
 
-        public ApplicationUsersController(ApplicationDbContext context)
+        public ApplicationUsersController(UserManager<ApplicationUser> manager, ApplicationDbContext context)
         {
-            _context = context;    
+            _manager = manager;
+            _context = context;
         }
 
         // GET: ApplicationUsers
-        public async Task<IActionResult> Index()
+        public ActionResult Index()
         {
-            return View(await _context.ApplicationUser.ToListAsync());
+            var User = _context.ApplicationUser.Where(u => u.Id.Equals(GetUserId()));
+            return View(User);
         }
 
         // GET: ApplicationUsers/Details/5
@@ -146,6 +150,11 @@ namespace RunTracker.Controllers
         private bool ApplicationUserExists(string id)
         {
             return _context.ApplicationUser.Any(e => e.Id == id);
+        }
+
+        private string GetUserId()
+        {
+            return _manager.GetUserId(HttpContext.User);
         }
     }
 }

@@ -27,8 +27,23 @@ namespace RunTracker.Controllers
             var Runs = GetUserRuns();
             var Today = DateTime.UtcNow;
             var User = GetUser();
-            ViewBag.Name = User.FirstName + " " + User.LastName;
-           
+
+            ViewBag.Name = User.GetName();
+            
+            if (Runs.Any())
+            {
+                ViewBag.Mileage = "Total Mileage: " + User.GetTotalMileage() + " Miles";
+                ViewBag.Fastest = "Fastest Run: " + User.GetFastest();
+                ViewBag.Farthest = "Farthest Run: " + User.GetFarthest();
+            }
+            else
+            {
+                ViewBag.NoRunsMsg = "No runs logged, get out there!";
+            }
+
+            
+
+
 
 
             switch (id)
