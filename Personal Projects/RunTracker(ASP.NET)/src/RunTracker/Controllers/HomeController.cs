@@ -21,22 +21,11 @@ namespace RunTracker.Controllers
 
         public IActionResult Index(int? id)
         {
-            var user = GetUser();
-            var runs = GetFilterRuns(id);
-            ViewBag.Name = user.GetName();
+            var chartView = new ChartViewModel();
+            chartView.User = GetUser();
+            chartView.Runs = GetFilterRuns(id);
 
-            if (runs.Any())
-            {
-                ViewBag.Mileage = "Total Mileage: " + user.GetTotalMileage() + " Miles";
-                ViewBag.Fastest = "Fastest Run: " + user.GetFastest();
-                ViewBag.Farthest = "Farthest Run: " + user.GetFarthest();
-            }
-            else
-            {
-                ViewBag.NoRunsMsg = "No runs logged, get out there!";
-            }
-
-            return View(runs.OrderBy(r => r.Date));
+            return View(chartView);
         }
 
         public IActionResult About()
@@ -79,26 +68,26 @@ namespace RunTracker.Controllers
                    .ToList();
         }
 
-        private List<Run> GetFilterRuns(int? rangeIndication)
+        private List<Run> GetFilterRuns(int? rangeIndicator)
         {
             List<Run> run;
             var Today = DateTime.UtcNow;
 
             // Filter runs 
-            switch (rangeIndication)
+            switch (rangeIndicator)
             {
                 // Current month
                 case 0:
                     run = GetUserRuns()
-                           .Where(r => r.Date.Year == Today.Year &&
-                                       r.Date.Month == Today.Month).ToList();
+                          .Where(r => r.Date.Year == Today.Year &&
+                                      r.Date.Month == Today.Month).ToList();
                     break;
                 // Past 3 months
                 case 1:
                     var StartDate = Today.AddMonths(-3);
                     run = GetUserRuns()
-                           .Where(r => r.Date >= StartDate &&
-                                       r.Date <= Today).ToList();
+                          .Where(r => r.Date >= StartDate &&
+                                      r.Date <= Today).ToList();
                     break;
                 // All time
                 case 2:
@@ -107,8 +96,8 @@ namespace RunTracker.Controllers
                 // This month
                 default:
                     run = GetUserRuns()
-                        .Where(r => r.Date.Year == Today.Year &&
-                                    r.Date.Month == Today.Month).ToList();
+                         .Where(r => r.Date.Year == Today.Year &&
+                                     r.Date.Month == Today.Month).ToList();
                     break;
             }
 
