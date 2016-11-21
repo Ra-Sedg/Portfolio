@@ -54,7 +54,6 @@ textarea {
 }
 
 
-
 /* Manage Run/Shoes buttons */
 a.smallLink {
     text-decoration: none !important;
@@ -95,6 +94,10 @@ td {
 }
 
 /* Layout nav bar */
+.navbar-nav {
+    font-size: 1.5em;
+}
+
 .navbar-brand {
     font-size: 2em;
 }
@@ -107,43 +110,34 @@ td {
     font-size: 1.5em;
 }
 
-.ct-series-a .ct-bar {
-
-  /* Colour of your bars */
-  stroke: red;
-  /* The width of your bars */
-  stroke-width: 20px;
-  
-  outline: auto;
-
-
-}
-
-
-
-.ct-label{
-  
+/* Home/Index chart styling */
+.ct-label {
     color: lightsteelblue;
     text-anchor: middle;
     font-size: 13px;
 }
 
-.ct-label.ct-label.ct-horizontal {
-  position: fixed;
-  justify-content: flex-end;
-  text-align: right;
-  transform-origin: 100% 0;
-  transform: translate(-100%) rotate(-45deg);
-  text-anchor: middle;
-  font-size: 12px;
+/* Distance line */
+.ct-series-a .ct-bar {
+    stroke: red;
+    stroke-width: 20px;
+    outline: auto;
 }
 
-
-.ct-series- .ct-line{
-    stroke-width: 3px;
-}
-
-.ct-series-b .ct-line{
+/* Pace line */
+.ct-series-b .ct-line {
     stroke-width: 3px;
     stroke: #5CB85C;
+}
+
+/* Rotate x-axis labes */
+/* Todo: Labes getting cropped in firefox */
+.ct-label.ct-label.ct-horizontal {
+    position: fixed;
+    justify-content: flex-end;
+    text-align: right;
+    transform-origin: 100% 0;
+    transform: translate(-100%) rotate(-45deg);
+    text-anchor: middle;
+    font-size: 12px;
 }

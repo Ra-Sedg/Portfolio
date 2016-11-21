@@ -1,6 +1,10 @@
-﻿// Write your Javascript code.
-(function () {
+﻿(function () {
+
+    // Shoes/Edit: Toggle switch.
     $("#InUse").bootstrapSwitch();
-    $('#datetimepicker4').datetimepicker();
+
+    // Runs/Create: Dropdown date picker
+    $('#datetimepicker').datetimepicker();
+
 })();
 

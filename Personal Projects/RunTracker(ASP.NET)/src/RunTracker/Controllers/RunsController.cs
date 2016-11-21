@@ -1,15 +1,14 @@
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RunTracker.Data;
-using RunTracker.Models;
-using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Authorization;
 using RunTracker.Helpers;
-using System.Collections;
+using RunTracker.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace RunTracker.Controllers
 {
@@ -29,7 +28,7 @@ namespace RunTracker.Controllers
         public IActionResult Index(string sortOrder)
         {
             // Set up sorting parameters.
-            ViewBag.LocationSort = sortOrder== "Location_Asc" ? "Location_Desc" : "Location_Asc";
+            ViewBag.LocationSort = sortOrder == "Location_Asc" ? "Location_Desc" : "Location_Asc";
             ViewBag.DateSort = sortOrder == "Date_Asc" ? "Date_Desc" : "Date_Asc";
             ViewBag.DistanceSort = sortOrder == "Distance_Asc" ? "Distance_Desc" : "Distance_Asc";
             ViewBag.PaceSort = sortOrder == "Pace_Asc" ? "Pace_Desc" : "Pace_Asc";
@@ -41,10 +40,10 @@ namespace RunTracker.Controllers
                 ViewData[s.Id.ToString()] = s.Name;
             }
 
-            var Runs = GetUserRuns();
-            Runs = Sort.SortRuns(Runs, sortOrder);
-          
-            return View(Runs);
+            var runs = GetUserRuns();
+            runs = Sort.SortRuns(runs, sortOrder);
+
+            return View(runs);
         }
 
         // GET: Runs/Details/5
@@ -71,7 +70,8 @@ namespace RunTracker.Controllers
         // GET: Runs/Create
         public IActionResult Create()
         {
-            ViewBag.Shoes = new SelectList(GetUserShoes(), "Id", "Name");
+            var shoes = GetUserShoes();
+            ViewBag.Shoes = new SelectList(shoes, "Id", "Name");
             ViewBag.Date = System.DateTime.Today.Date;
             return View();
         }
@@ -187,6 +187,7 @@ namespace RunTracker.Controllers
             return RedirectToAction("Index");
         }
 
+        // Helpers
         private bool RunExists(int id)
         {
             return _context.Run.Any(e => e.Id == id);

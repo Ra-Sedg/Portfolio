@@ -14,26 +14,21 @@
     <div class="col-md-6">
         @if (Model.Any())
         {
-
             <div class="well well-sm">@ViewBag.Mileage</div>
             <div class="well well-sm">@ViewBag.Fastest</div>
             <div class="well well-sm">@ViewBag.Farthest</div>
-
-
         }
         else
         {
             <div class="well well-sm">@ViewBag.NoRunsMsg</div>
-
         }
     </div>
     <div class="col-md-6"></div>
 </div>
 <div class="btn-group">
-
     <a asp-area="" asp-controller="Home" asp-route-id=0 asp-action="Index" class="btn btn-info">Last Month</a>
     <a asp-area="" asp-controller="Home" asp-route-id=1 asp-action="Index" class="btn btn-info">Last 3 Months</a>
-    <a asp-area="" asp-controller="Home" asp-route-id=2 asp-action="Index" class="btn btn-info">All Time</a> 
+    <a asp-area="" asp-controller="Home" asp-route-id=2 asp-action="Index" class="btn btn-info">All Time</a>
 </div>
 <div class="pull-right">
     <label class="label label-danger">Distance</label>
@@ -42,21 +37,19 @@
 
 <div class="ct-chart run_frequency"></div>
 
-
-
+<!-- Draw chart --> 
 <script type="text/javascript">
 
     var dist = [];
     var date = [];
     var pace = [];
 
-
+    // Tranfer data from model to javascrip array
     @foreach(Run r in Model)
     {
         @:date.push("@r.Date.ToString("MM/dd/yy")");
         @:dist.push("@r.Distance");
         @:pace.push("@r.PaceDouble");
-    
     }
 
     var data = {
@@ -68,7 +61,7 @@
         axisX: {
             labelOffset: {
                 x: 0,
-                y:10
+                y: 10
             }
         },
         axisY: {
@@ -80,7 +73,7 @@
             bottom: 20
         },
         showPoint: false,
-        height: 250     
+        height: 250
     };
 
     new Chartist.Line('.ct-chart', data, options);

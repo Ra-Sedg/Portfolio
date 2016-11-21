@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RunTracker.Data;
-using Microsoft.AspNetCore.Identity;
 using RunTracker.Models;
-using RunTracker.Helpers;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RunTracker.Controllers
 {
@@ -24,54 +21,23 @@ namespace RunTracker.Controllers
 
         public IActionResult Index(int? id)
         {
-            var Runs = GetUserRuns();
-            var Today = DateTime.UtcNow;
-            var User = GetUser();
+            var user = GetUser();
+            var runs = GetFilterRuns(id);
+            ViewBag.Name = user.GetName();
 
-            ViewBag.Name = User.GetName();
-            
-            if (Runs.Any())
+            if (runs.Any())
             {
-                ViewBag.Mileage = "Total Mileage: " + User.GetTotalMileage() + " Miles";
-                ViewBag.Fastest = "Fastest Run: " + User.GetFastest();
-                ViewBag.Farthest = "Farthest Run: " + User.GetFarthest();
+                ViewBag.Mileage = "Total Mileage: " + user.GetTotalMileage() + " Miles";
+                ViewBag.Fastest = "Fastest Run: " + user.GetFastest();
+                ViewBag.Farthest = "Farthest Run: " + user.GetFarthest();
             }
             else
             {
                 ViewBag.NoRunsMsg = "No runs logged, get out there!";
             }
 
-            
-
-
-
-
-            switch (id)
-            {
-                case 0:
-                    Runs = Runs
-                        .Where(r => r.Date.Year == Today.Year &&
-                                    r.Date.Month == Today.Month).ToList();
-                    break;
-                case 1:
-                    var StartDate = Today.AddMonths(-3);
-                    Runs = Runs
-                        .Where(r => r.Date >= StartDate &&
-                                    r.Date <= Today).ToList();
-                    break;
-                case 2:
-                    break;
-                default:
-                    Runs = Runs
-                        .Where(r => r.Date.Year == Today.Year &&
-                                    r.Date.Month == Today.Month).ToList();
-                    break;
-
-            }
-            return View(Runs.OrderBy(r => r.Date));
+            return View(runs.OrderBy(r => r.Date));
         }
-
-       
 
         public IActionResult About()
         {
@@ -92,46 +58,7 @@ namespace RunTracker.Controllers
             return View();
         }
 
-        public IActionResult GraphRuns()
-        {
-            return View();
-        }
-
-
-        // GET: Runs/GraphRun
-        [HttpPost]
-        public IActionResult GraphRuns(int? id)
-        {
-            var Runs = GetUserRuns();
-            var Today = DateTime.UtcNow;
-            
-
-            
-            switch (id)
-            {
-                case 0:
-
-                    Runs = Runs
-                        .Where(r => r.Date.Year == Today.Year &&
-                                    r.Date.Month == Today.Month).ToList();
-                    break;
-                case 1:
-                    var StartDate = Today.AddMonths(-3);
-                    Runs = Runs
-                        .Where(r => r.Date >= StartDate &&
-                                    r.Date <= Today).ToList();
-                    break;
-                case 2:
-                    break;
-                default:
-                    break;
-
-            }
-            return View(Runs);
-        }
-
-
-
+        // Helpers
         private string GetUserId()
         {
             return _manager.GetUserId(HttpContext.User);
@@ -147,9 +74,45 @@ namespace RunTracker.Controllers
         private List<Run> GetUserRuns()
         {
             return _context.Run
+                   .OrderBy(r => r.Date)
                    .Where(run => run.ApplicationUserId == GetUserId())
                    .ToList();
-        }     
-        
+        }
+
+        private List<Run> GetFilterRuns(int? rangeIndication)
+        {
+            List<Run> run;
+            var Today = DateTime.UtcNow;
+
+            // Filter runs 
+            switch (rangeIndication)
+            {
+                // Current month
+                case 0:
+                    run = GetUserRuns()
+                           .Where(r => r.Date.Year == Today.Year &&
+                                       r.Date.Month == Today.Month).ToList();
+                    break;
+                // Past 3 months
+                case 1:
+                    var StartDate = Today.AddMonths(-3);
+                    run = GetUserRuns()
+                           .Where(r => r.Date >= StartDate &&
+                                       r.Date <= Today).ToList();
+                    break;
+                // All time
+                case 2:
+                    run = GetUserRuns();
+                    break;
+                // This month
+                default:
+                    run = GetUserRuns()
+                        .Where(r => r.Date.Year == Today.Year &&
+                                    r.Date.Month == Today.Month).ToList();
+                    break;
+            }
+
+            return run;
+        }
     }
 }

@@ -53,7 +53,7 @@ namespace RunTracker.Models
 
         public override string ToString()
         {
-            return Date.ToString("d/M/yyyy") + " - " + Distance + " - " + PaceString;
+            return Date.ToString("d/M/yyyy") + " - " + Distance + " Miles - " + PaceString;
         }
 
     }

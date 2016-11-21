@@ -1,4 +1,4 @@
-@model IEnumerable<RunTracker.Models.ApplicationUser>
+@model RunTracker.Models.ApplicationUser
 
 @{
     ViewData["Title"] = "Index";
@@ -8,11 +8,10 @@
 
 <table class="table">
     <thead>
-        <tr>           
+        <tr>
             <th>
                 Email
             </th>
-            
             <th>
                 First Name
             </th>
@@ -32,31 +31,29 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
+                @Html.DisplayFor(model => model.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
+                @Html.DisplayFor(model => model.FirstName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>         
+                @Html.DisplayFor(model => model.LastName)
+            </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
+                @Html.DisplayFor(model => model.PhoneNumber)
             </td>
 
             <td>
-                @Html.DisplayFor(modelItem => item.Age)
+                @Html.DisplayFor(model => model.Age)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UserName)
+                @Html.DisplayFor(model => model.UserName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
             </td>
         </tr>
-}
     </tbody>
 </table>
