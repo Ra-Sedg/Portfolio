@@ -10,35 +10,71 @@
 
 <h3>@ViewBag.Name</h3>
 
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Index">
+                <div class="btn-toolbar">
+                    <div class="btn-group">
+                        <select asp-for="SelectedYear" class="dropdown" asp-items="ViewBag.Years"><option>@Model.CurrentDate.Year</option></select>
+                        <select asp-for="SelectedMonth" class="dropdown" asp-items="ViewBag.Months"><option>@Model.CurrentDate.Month</option></select>
+                    </div>
+                    <div class="btn-group">
+                        <input type="submit" class="btn btn-xs btn-info" value="Select" />
+                    </div>
+                    <div class="btn-group">
+                        <a asp-area="" asp-controller="Home" asp-route-id=1 asp-action="Index" class="btn btn-xs btn-success">Show All</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6"></div>
+    </div>
+
+    @if (Model.Runs.Any())
+    {
+        <div class="row">
+            <div class="col-md-6">
+                <div class="well well-sm">
+                    <i class="btn btn-sm  btn-primary fa fa-road pull-left"></i>
+                    <p>Total Mileage: @Model.GetTotalMileage()</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="well well-sm">
+                    <i class="btn btn-sm  btn-primary fa fa-bolt pull-left"></i>
+                    <p>Fastest Run: @Model.GetFastest()</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="well well-sm">
+                    <i class="btn btn-sm btn-primary fa fa-arrow-circle-o-right pull-left"></i>
+                    <p>Farthest Run: @Model.GetFarthest()</p>
+                </div>
+            </div>
+        </div>
+        
+    }
+    else
+    {
+        <div class="well well-sm">No runs logged, get out there!</div>
+    }
+
+</div>
+
+
+
 <div class="row">
     <div class="col-md-6">
-        @if (Model.Runs.Any())
-        {
-            <div class="well well-sm">Total Mileage: @Model.User.GetTotalMileage()</div>
-            <div class="well well-sm">Fastest Run: @Model.User.GetFastest()</div>
-            <div class="well well-sm">Farthest Run: @Model.User.GetFarthest()</div>
-        }
-        else
-        {
-            <div class="well well-sm">No runs logged, get out there!</div>
-        }
+        
     </div>
     <div class="col-md-6"></div>
 </div>
-<form asp-action="Index">
-    <div class="btn-toolbar">
-        <div class="btn-group">
-            <select asp-for="SelectedYear" class="dropdown" asp-items="ViewBag.Years"><option>@Model.CurrentDate.Year</option></select>
-            <select asp-for="SelectedMonth" class="dropdown" asp-items="ViewBag.Months"><option>@Model.CurrentDate.Month</option></select>
-        </div>
-        <div class="btn-group">
-            <input type="submit" class="btn btn-xs btn-info" value="Select" />
-        </div>
-        <div class="btn-group">
-            <a asp-area="" asp-controller="Home" asp-route-id=1 asp-action="Index" class="btn btn-xs btn-success">Show All</a>
-        </div>
-    </div>
-</form>
+
 
 <div class="pull-right">
     <label class="label label-danger">Distance</label>
@@ -69,7 +105,7 @@
 
     var options = {
         showPoint: false,
-        height: 250
+        height: 225
     };
 
     new Chartist.Line('.ct-chart', data, options);

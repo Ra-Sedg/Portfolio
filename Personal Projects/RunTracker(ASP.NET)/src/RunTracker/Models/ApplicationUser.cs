@@ -25,43 +25,5 @@ namespace RunTracker.Models
                 return FirstName + " " + LastName;
             }
         }
-
-        public double GetTotalMileage()
-        {
-            if (Runs == null)
-            {
-                return 0.0;
-            }
-            else
-            {
-                return Runs.Sum(run => run.Distance);
-            }
-        }
-
-        public Run GetFastest()
-        {
-            if (Runs == null)
-            {
-                return null;
-            }
-            else
-            {
-                return Runs.OrderBy(r => r.PaceDouble)
-                                 .FirstOrDefault();
-            }
-        }
-
-        public Run GetFarthest()
-        {
-            if (Runs == null)
-            {
-                return null;
-            }
-            else
-            {
-                return Runs.OrderByDescending(r => r.Distance)
-                           .FirstOrDefault(); 
-            }
-        }
     }
 }
