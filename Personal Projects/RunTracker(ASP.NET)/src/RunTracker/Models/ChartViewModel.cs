@@ -10,6 +10,7 @@ namespace RunTracker.Models
         public bool ShowAllRuns { get; set; }
         public int SelectedMonth { get; set; }
         public int SelectedYear { get; set; }
+        public DateTime CurrentDate { get; set; }
 
         public ApplicationUser User { get; set; }
         public List<Run> Runs { get; set; }

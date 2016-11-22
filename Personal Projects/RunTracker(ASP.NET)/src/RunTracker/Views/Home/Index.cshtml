@@ -25,11 +25,21 @@
     </div>
     <div class="col-md-6"></div>
 </div>
-<div class="btn-group">
-    <a asp-area="" asp-controller="Home" asp-route-id=0 asp-action="Index" class="btn btn-info">Last Month</a>
-    <a asp-area="" asp-controller="Home" asp-route-id=1 asp-action="Index" class="btn btn-info">Last 3 Months</a>
-    <a asp-area="" asp-controller="Home" asp-route-id=2 asp-action="Index" class="btn btn-info">All Time</a>
-</div>
+<form asp-action="Index">
+    <div class="btn-toolbar">
+        <div class="btn-group">
+            <select asp-for="SelectedYear" class="dropdown" asp-items="ViewBag.Years"><option>@Model.CurrentDate.Year</option></select>
+            <select asp-for="SelectedMonth" class="dropdown" asp-items="ViewBag.Months"><option>@Model.CurrentDate.Month</option></select>
+        </div>
+        <div class="btn-group">
+            <input type="submit" class="btn btn-xs btn-info" value="Select" />
+        </div>
+        <div class="btn-group">
+            <a asp-area="" asp-controller="Home" asp-route-id=1 asp-action="Index" class="btn btn-xs btn-success">Show All</a>
+        </div>
+    </div>
+</form>
+
 <div class="pull-right">
     <label class="label label-danger">Distance</label>
     <label class="label label-success">Pace</label>
@@ -58,20 +68,6 @@
     };
 
     var options = {
-        axisX: {
-            labelOffset: {
-                x: 0,
-                y: 10
-            }
-        },
-        axisY: {
-            offset: 0,
-        },
-        chartPadding: {
-            top: 20,
-            left: 28,
-            bottom: 20
-        },
         showPoint: false,
         height: 250
     };

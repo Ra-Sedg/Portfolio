@@ -141,3 +141,8 @@ td {
     text-anchor: middle;
     font-size: 12px;
 }
+
+/* Fix x-axis label crop in firefox */
+.ct-chart-line{
+        overflow:visible !important;
+}

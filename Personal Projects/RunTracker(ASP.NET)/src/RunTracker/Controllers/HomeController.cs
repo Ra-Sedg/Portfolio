@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using RunTracker.Data;
 using RunTracker.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace RunTracker.Controllers
@@ -23,8 +25,37 @@ namespace RunTracker.Controllers
         {
             var chartView = new ChartViewModel();
             chartView.User = GetUser();
-            chartView.Runs = GetFilterRuns(id);
+            chartView.CurrentDate = DateTime.Today;
+            ViewBag.Months = GetMonths();
+            ViewBag.Years = GetYears();
 
+            if (id != null && id == 1)
+            {
+                chartView.Runs = GetUserRuns();
+            }
+            else
+            {
+                chartView.Runs = GetFilterRuns(DateTime.Today.Month, DateTime.Today.Year);
+
+            }
+            return View(chartView);
+        }
+
+        [HttpPost]
+        public ActionResult Index(ChartViewModel chartView)
+        {
+            chartView.User = GetUser();
+            ViewBag.Months = GetMonths();
+            ViewBag.Years = GetYears();
+
+            if (chartView.ShowAllRuns)
+            {
+                chartView.Runs = GetUserRuns();
+            }
+            else
+            {
+                chartView.Runs = GetFilterRuns(chartView.SelectedMonth, chartView.SelectedYear);
+            }
             return View(chartView);
         }
 
@@ -68,40 +99,32 @@ namespace RunTracker.Controllers
                    .ToList();
         }
 
-        private List<Run> GetFilterRuns(int? rangeIndicator)
+        private List<Run> GetFilterRuns(int month, int year)
         {
-            List<Run> run;
-            var Today = DateTime.UtcNow;
+            List<Run> runs;
+            runs = GetUserRuns().Where(r => r.Date.Year == year &&
+                                            r.Date.Month == month).ToList();
+            return runs;
+        }
 
-            // Filter runs 
-            switch (rangeIndicator)
-            {
-                // Current month
-                case 0:
-                    run = GetUserRuns()
-                          .Where(r => r.Date.Year == Today.Year &&
-                                      r.Date.Month == Today.Month).ToList();
-                    break;
-                // Past 3 months
-                case 1:
-                    var StartDate = Today.AddMonths(-3);
-                    run = GetUserRuns()
-                          .Where(r => r.Date >= StartDate &&
-                                      r.Date <= Today).ToList();
-                    break;
-                // All time
-                case 2:
-                    run = GetUserRuns();
-                    break;
-                // This month
-                default:
-                    run = GetUserRuns()
-                         .Where(r => r.Date.Year == Today.Year &&
-                                     r.Date.Month == Today.Month).ToList();
-                    break;
-            }
+        private SelectList GetMonths()
+        {
+            return new SelectList(Enumerable.Range(1, 12).Select(x =>
+                       new SelectListItem()
+                       {
+                           Text = CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedMonthNames[x - 1],
+                           Value = x.ToString()
+                       }), "Value", "Text");
+        }
 
-            return run;
+        private SelectList GetYears()
+        {
+            return new SelectList(Enumerable.Range(DateTime.Today.AddYears(-10).Year, 30).Select(x =>
+                       new SelectListItem()
+                       {
+                           Text = x.ToString(),
+                           Value = x.ToString()
+                       }), "Value", "Text");
         }
     }
 }
