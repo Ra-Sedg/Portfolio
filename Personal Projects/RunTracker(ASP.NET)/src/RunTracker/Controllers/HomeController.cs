@@ -26,8 +26,8 @@ namespace RunTracker.Controllers
             var chartView = new ChartViewModel();
             chartView.User = GetUser();
             chartView.CurrentDate = DateTime.Today;
-            ViewBag.Months = GetMonths();
-            ViewBag.Years = GetYears();
+            ViewBag.Months = GetMonths(GetUserRuns());
+            ViewBag.Years = GetYears(GetUserRuns());
 
             if (id != null && id == 1)
             {
@@ -38,6 +38,7 @@ namespace RunTracker.Controllers
                 chartView.Runs = GetFilterRuns(DateTime.Today.Month, DateTime.Today.Year);
 
             }
+
             return View(chartView);
         }
 
@@ -45,8 +46,8 @@ namespace RunTracker.Controllers
         public ActionResult Index(ChartViewModel chartView)
         {
             chartView.User = GetUser();
-            ViewBag.Months = GetMonths();
-            ViewBag.Years = GetYears();
+            ViewBag.Months = GetMonths(GetUserRuns());
+            ViewBag.Years = GetYears(GetUserRuns());
 
             if (chartView.ShowAllRuns)
             {
@@ -56,6 +57,7 @@ namespace RunTracker.Controllers
             {
                 chartView.Runs = GetFilterRuns(chartView.SelectedMonth, chartView.SelectedYear);
             }
+
             return View(chartView);
         }
 
@@ -107,9 +109,14 @@ namespace RunTracker.Controllers
             return runs;
         }
 
-        private SelectList GetMonths()
+        private SelectList GetMonths(List<Run> runs)
         {
-            return new SelectList(Enumerable.Range(1, 12).Select(x =>
+            // Select Months for which run data exists.
+            List<int> runMonths = new List<int>();
+            runMonths = runs.Select(r => r.Date.Month).Distinct().OrderByDescending(m => m).ToList();
+
+            // Populate and return selectList with abbriviated month names for all months in runMonths.
+            return new SelectList(runMonths.Select(x =>
                        new SelectListItem()
                        {
                            Text = CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedMonthNames[x - 1],
@@ -117,9 +124,14 @@ namespace RunTracker.Controllers
                        }), "Value", "Text");
         }
 
-        private SelectList GetYears()
+        private SelectList GetYears(List<Run> runs)
         {
-            return new SelectList(Enumerable.Range(DateTime.Today.AddYears(-10).Year, 30).Select(x =>
+            // Select years for which run data exists.
+            List<int> runYears = new List<int>();
+            runYears = runs.Select(r => r.Date.Year).Distinct().OrderByDescending(y => y).ToList();
+
+            // Populate and return selectList for all years in runYears.
+            return new SelectList(runYears.Select(x =>
                        new SelectListItem()
                        {
                            Text = x.ToString(),

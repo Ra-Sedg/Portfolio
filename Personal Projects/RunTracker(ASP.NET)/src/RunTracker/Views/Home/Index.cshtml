@@ -16,8 +16,8 @@
             <form asp-action="Index">
                 <div class="btn-toolbar">
                     <div class="btn-group">
-                        <select asp-for="SelectedYear" class="dropdown" asp-items="ViewBag.Years"><option>@Model.CurrentDate.Year</option></select>
-                        <select asp-for="SelectedMonth" class="dropdown" asp-items="ViewBag.Months"><option>@Model.CurrentDate.Month</option></select>
+                        <select asp-for="SelectedYear" class="dropdown" asp-items="ViewBag.Years"></select>
+                        <select asp-for="SelectedMonth" class="dropdown" asp-items="ViewBag.Months"></select>
                     </div>
                     <div class="btn-group">
                         <input type="submit" class="btn btn-xs btn-info" value="Select" />
@@ -44,20 +44,19 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="well well-sm">
-                    <i class="btn btn-sm  btn-primary fa fa-bolt pull-left"></i>
-                    <p>Fastest Run: @Model.GetFastest()</p>
+                    <i class="btn btn-sm btn-primary fa fa-arrow-circle-o-right pull-left"></i>
+                    <p>Farthest Run: @Model.GetFarthest()</p>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="well well-sm">
-                    <i class="btn btn-sm btn-primary fa fa-arrow-circle-o-right pull-left"></i>
-                    <p>Farthest Run: @Model.GetFarthest()</p>
+                    <i class="btn btn-sm  btn-primary fa fa-bolt pull-left"></i>
+                    <p>Fastest Run: @Model.GetFastest()</p>
                 </div>
             </div>
-        </div>
-        
+        </div> 
     }
     else
     {
