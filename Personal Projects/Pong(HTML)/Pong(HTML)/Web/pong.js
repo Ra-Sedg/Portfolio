@@ -1,93 +1,97 @@
-﻿function Game() {
-    // Board
-    var canvas = document.getElementById("game");
-    this.width = canvas.width;
-    this.height = canvas.height;
-    this.context = canvas.getContext("2d");
-    this.context.fillStyle = "white";
-    this.keys = new KeyListener();
+﻿
+// requestAnimationFrame method will call the callback at 60fps, also
+// allows browser to preform optimization on the call. 
+var animate = window.requestAnimationFrame ||
+  window.webkitRequestAnimationFrame ||
+  window.mozRequestAnimationFrame ||
+  function(callback) { window.setTimeout(callback, 1000/60) };
 
-    // Player Paddles
-    this.p1 = new Paddle(5, 0);
-    this.p1.y = this.height / 2 - this.p1.height / 2;
-    this.p2 = new Paddle(this.width - 5 - 2, 0);
-    this.p2.y = this.height / 2 - this.p2.height / 2;
-}
 
-// Class: Represents left and right player paddles.
-function Paddle(x, y) {
+// Set up canvas for 2d.
+var canvas = document.createElement('canvas');
+var width = 400;
+var height = 600;
+canvas.width = width;
+canvas.height = height;
+var context = canvas.getContext('2d');
+
+// Attach canvas when page loads
+window.onload = function() {
+    document.body.appendChild(canvas);
+    animate(step);
+};
+
+// Step() 
+// Updates all objects
+// Render all objects
+// uses requestAnimationFrame to call itself again
+var step = function() {
+    update();
+    render();
+    animate(step);
+};
+
+// update()
+var update = function () {
+};
+
+
+// Object Paddle
+function Paddle(x, y, width, height) {
     this.x = x;
     this.y = y;
-    this.width = 4;
-    this.height = 56;
-    this.score = 0;
+    this.width = width;
+    this.height = height;
+    this.x_speed = 0;
+    this.y_speed = 0;
 }
 
-// Class Keeps track of which key was pressed first
-function KeyListener() {
-    this.pressedKeys = [];
+// Draw Paddles
+Paddle.prototype.render = function () {
+    context.fillStyle = "#008ea6";
+    context.fillRect(this.x, this.y, this.width, this.height);
+};
 
-    this.keydown = function (e) {
-        this.pressedKeys[e.keyCode] = true;
-    };
 
-    this.keyup = function (e) {
-        this.pressedKeys[e.keyCode] = false;
-    };
-
-    document.addEventListener("keydown", this.keydown.bind(this));
-    document.addEventListener("keyup", this.keyup.bind(this));
+function Player() {
+    this.paddle = new Paddle(175, 580, 50, 10);
 }
 
-KeyListener.prototype.isPressed = function (key) {
-    return this.pressedKeys[key] ? true : false;
-};
-
-KeyListener.prototype.addKeyPressListener = function (keyCode, callback) {
-    document.addEventListener("keypress", function (e) {
-        if (e.keyCode == keyCode)
-            callback(e);
-    });
-};
-
-Paddle.prototype.draw = function (p) {
-    p.fillRect(this.x, this.y, this.width, this.height);
-};
-
-Game.prototype.draw = function () {
-    this.context.clearRect(0, 0, this.width, this.height);
-    this.context.fillRect(this.width / 2, 0, 2, this.height);
-
-    this.p1.draw(this.context);
-    this.p2.draw(this.context);
-};
-
-Game.prototype.update = function () {
-    if (this.paused)
-        return;
-
-    if (this.keys.isPressed(83)) { // DOWN
-        this.p1.y = Math.min(this.height - this.p1.height, this.p1.y + 4);
-    } else if (this.keys.isPressed(87)) { // UP
-        this.p1.y = Math.max(0, this.p1.y - 4);
-    }
-
-    if (this.keys.isPressed(40)) { // DOWN
-        this.p2.y = Math.min(this.height - this.p2.height, this.p2.y + 4);
-    } else if (this.keys.isPressed(38)) { // UP
-        this.p2.y = Math.max(0, this.p2.y - 4);
-    }
-};
-
-
-var game = new Game();
- 
-function MainLoop() {
-    game.update();
-    game.draw();
-    // Call the main loop again at a frame rate of 30fps
-    setTimeout(MainLoop, 33.3333);
+function Computer() {
+    this.paddle = new Paddle(175, 10, 50, 10);
 }
- 
-// Start the game execution
-MainLoop();
+
+Player.prototype.render = function () {
+    this.paddle.render();
+};
+
+Computer.prototype.render = function () {
+    this.paddle.render();
+};
+
+function Ball(x, y) {
+    this.x = x;
+    this.y = y;
+    this.x_speed = 0;
+    this.y_speed = 3;
+    this.radius = 5;
+}
+
+Ball.prototype.render = function () {
+    context.beginPath();
+    context.arc(this.x, this.y, this.radius, 2 * Math.PI, false);
+    context.fillStyle = "#fe8d2d";
+    context.fill();
+};
+
+var player = new Player();
+var computer = new Computer();
+var ball = new Ball(200, 300);
+
+var render = function () {
+    context.fillStyle = "#323291";
+    context.fillRect(0, 0, width, height);
+    player.render();
+    computer.render();
+    ball.render();
+};
