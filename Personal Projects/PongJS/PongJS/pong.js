@@ -8,8 +8,8 @@ class Circle {
     constructor(x, y, radius, color) {
         this.x = x;
         this.y = y;
-        this.dx = 2;
-        this.dy = -2;
+        this.dx = -2;
+        this.dy = 2;
         this.radius = radius;
         this.color = color;
         this.startAngle = 0;
@@ -17,7 +17,7 @@ class Circle {
         this.anticlockwise = false;
     }
 
-    render(context) {
+    render(context, leftPaddle, rightPaddle) {
 
         // Draw ball.
         context.beginPath();
@@ -32,13 +32,29 @@ class Circle {
             this.dy = -(this.dy);
         }
 
-        // Left and right collision
-        if (this.x + this.dx < 0 - this.radius || this.x + this.dx > canvasWidth + this.radius) {
-            //this.dx = -(this.dx);
-            this.x = canvasWidth / 2;
-            this.y = canvasHeight / 2;
-            this.dy = 0
-            this.dx = (this.dx > 0) ? -2 : 2;
+        // Left Paddle collision
+        if (this.x + this.dx < paddleWidth) {
+            if (this.y > leftPaddle.y && this.y < leftPaddle.y + paddleHeight) {
+                this.dx = -(this.dx);
+            }
+            else if (this.x + this.dx < 0 - this.radius){
+                this.x = canvasWidth / 2;
+                this.y = canvasHeight / 2;
+                this.dy = -(this.dy);
+                // left point
+            }
+        }
+        
+        // Right Paddle collsioin
+        if (this.x + this.dx > canvasWidth - paddleWidth ) {
+            if (this.y > rightPaddle.y && this.y < rightPaddle.y + paddleHeight) {
+                this.dx = -(this.dx);
+            }
+            else if (this.x + this.dx > canvasWidth + this.radius) {
+                this.x = canvasWidth / 2;
+                this.y = canvasHeight / 2;
+                this.dy = -(this.dy);
+            }
         }
 
         this.x += this.dx;
@@ -76,10 +92,10 @@ class Square {
     renderAi(context, ball) {
 
         if (this.y + (paddleHeight/2) > ball.y && (this.y > 0)) {
-            this.y -= 1.5;
+            this.y -= 2;
         }
         else if (this.y + (paddleHeight/2) < ball.y && (this.y < canvasHeight - paddleHeight)) {
-            this.y += 1.5;
+            this.y += 2;
         }
 
         context.beginPath();
@@ -165,8 +181,9 @@ document.body.appendChild(canvas);
 
 function draw() {
     context.clearRect(0, 0, canvasWidth, canvasHeight);
-    ball.render(context);
-    playerPaddle.renderPlayer(context, upPressed, downPressed);
+    ball.render(context, playerPaddle, aiPaddle);
+    //playerPaddle.renderPlayer(context, upPressed, downPressed);
+    playerPaddle.renderAi(context, ball);
     aiPaddle.renderAi(context, ball);
     
 }
