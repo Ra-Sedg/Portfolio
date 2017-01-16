@@ -33,8 +33,12 @@ class Circle {
         }
 
         // Left and right collision
-        if (this.x + this.dx < this.radius || this.x + this.dx > canvasWidth - this.radius) {
-            this.dx = -(this.dx);
+        if (this.x + this.dx < 0 - this.radius || this.x + this.dx > canvasWidth + this.radius) {
+            //this.dx = -(this.dx);
+            this.x = canvasWidth / 2;
+            this.y = canvasHeight / 2;
+            this.dy = 0
+            this.dx = (this.dx > 0) ? -2 : 2;
         }
 
         this.x += this.dx;
@@ -71,10 +75,10 @@ class Square {
 
     renderAi(context, ball) {
 
-        if (this.y > ball.y && (this.y > 0)) {
+        if (this.y + (paddleHeight/2) > ball.y && (this.y > 0)) {
             this.y -= 1.5;
         }
-        else if (this.y < ball.y && (this.y < canvasHeight - paddleHeight)) {
+        else if (this.y + (paddleHeight/2) < ball.y && (this.y < canvasHeight - paddleHeight)) {
             this.y += 1.5;
         }
 
