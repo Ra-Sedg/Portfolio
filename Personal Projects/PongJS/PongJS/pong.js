@@ -1,27 +1,29 @@
 ﻿
 
     
-
-// Circle class
+// Classes
+//===============================================================================================
 class Circle {
 
-    constructor(x, y, radius) {
+    constructor(x, y, radius, color) {
         this.x = x;
         this.y = y;
         this.dx = 2;
         this.dy = -2;
         this.radius = radius;
+        this.color = color;
         this.startAngle = 0;
         this.endAngle = Math.PI * 2;
         this.anticlockwise = false;
     }
 
-    render(context, color) {
+    render(context) {
+
+        // Draw ball.
         context.beginPath();
-        console.log(this.x + ", " + this.y + ", " + this.radius);
         context.arc(this.x, this.y, this.radius,
                     this.startAngle, this.endAngle, this.anticlockwise);
-        context.fillStyle = color;
+        context.fillStyle = this.color;
         context.fill();
         context.closePath();
 
@@ -37,30 +39,121 @@ class Circle {
 
         this.x += this.dx;
         this.y += this.dy;
+
     }
 }
 
-// Add Canvas
+class Square {
 
+    constructor(x, y, width, height, color) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.color = color
+    }
+
+    render(context, upPressed, downPressed) {
+
+        if (upPressed && (this.y > 0)) {
+            this.y -= 3;
+        }
+        else if (downPressed && (this.y < canvasHeight - paddleHeight)) {
+            this.y += 3;
+        }
+
+        context.beginPath();
+        context.rect(this.x, this.y, this.width, this.height);
+        context.fillStyle = this.color; 
+        context.fill();
+        context.closePath();
+    }
+}
+//===============================================================================================
+
+// Game Board
+//===============================================================================================
 var canvasHeight = 300;
 var canvasWidth = 600;
-var blue = "#0095DD";
 
 var canvas = document.createElement('canvas');
-canvas.id = "myCanvas";
-canvas.width = canvasWidth;
-canvas.height = canvasHeight;
+    canvas.id = "myCanvas";
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
     
-var context = canvas.getContext("2d");
-var ball = new Circle(canvasWidth/2, canvasHeight/2, 6);
-    
+    var context = canvas.getContext("2d");
+//===============================================================================================
+
+
+// Game Tokens
+//===============================================================================================
+var blue = "#0095DD";
+var paddleHeight = canvasHeight / 6;
+var paddleWidth = canvasWidth / 60;
+var paddleY = (canvasHeight - paddleHeight) / 2;
+
+
+var ball = new Circle(canvasWidth / 2, canvasHeight / 2, 6, blue);
+
+var playerPaddle = new Square(
+    0,
+    paddleY,
+    paddleWidth,
+    paddleHeight,
+    blue
+    );
+
+var aiPaddle = new Square(
+    canvasWidth - paddleWidth,
+    paddleY,
+    paddleWidth,
+    paddleHeight,
+    blue
+    );
+//===============================================================================================
+
+// Controlls
+//===============================================================================================
+var downPressed = false;
+var upPressed = false;
+
+function keyDownHandler(e) {
+    if (e.keyCode == 83) {
+        downPressed = true;
+    }
+    else if (e.keyCode == 87) {
+        upPressed = true;
+    }
+}
+
+function keyUpHandler(e) {
+    if (e.keyCode == 83) {
+        downPressed = false;
+    }
+    else if (e.keyCode == 87) {
+        upPressed = false;
+    }
+}
+//===============================================================================================
+
+
+// Execute Game
+//===============================================================================================
 document.body.appendChild(canvas);
 
-//================================================
+
 
 function draw() {
     context.clearRect(0, 0, canvasWidth, canvasHeight);
-    ball.render(context, blue);
+    ball.render(context);
+    playerPaddle.render(context, upPressed, downPressed);
+    aiPaddle.render(context, false, false);
+
+    
+    
 }
 
+document.addEventListener("keydown", keyDownHandler, false);
+document.addEventListener("keyup", keyUpHandler, false);
 setInterval(draw, 10);
+//===============================================================================================
