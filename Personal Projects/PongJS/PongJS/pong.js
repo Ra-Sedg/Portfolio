@@ -53,7 +53,7 @@ class Square {
         this.color = color
     }
 
-    render(context, upPressed, downPressed) {
+    renderPlayer(context, upPressed, downPressed) {
 
         if (upPressed && (this.y > 0)) {
             this.y -= 3;
@@ -65,6 +65,22 @@ class Square {
         context.beginPath();
         context.rect(this.x, this.y, this.width, this.height);
         context.fillStyle = this.color; 
+        context.fill();
+        context.closePath();
+    }
+
+    renderAi(context, ball) {
+
+        if (this.y > ball.y && (this.y > 0)) {
+            this.y -= 1.5;
+        }
+        else if (this.y < ball.y && (this.y < canvasHeight - paddleHeight)) {
+            this.y += 1.5;
+        }
+
+        context.beginPath();
+        context.rect(this.x, this.y, this.width, this.height);
+        context.fillStyle = this.color;
         context.fill();
         context.closePath();
     }
@@ -146,10 +162,8 @@ document.body.appendChild(canvas);
 function draw() {
     context.clearRect(0, 0, canvasWidth, canvasHeight);
     ball.render(context);
-    playerPaddle.render(context, upPressed, downPressed);
-    aiPaddle.render(context, false, false);
-
-    
+    playerPaddle.renderPlayer(context, upPressed, downPressed);
+    aiPaddle.renderAi(context, ball);
     
 }
 
