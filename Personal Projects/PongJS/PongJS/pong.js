@@ -9,7 +9,7 @@ class Circle {
         this.x = x;
         this.y = y;
         this.dx = -2;
-        this.dy = 2;
+        this.dy = 0;
         this.radius = radius;
         this.color = color;
         this.startAngle = 0;
@@ -17,7 +17,7 @@ class Circle {
         this.anticlockwise = false;
     }
 
-    render(context, leftPaddle, rightPaddle) {
+    render(context, leftPaddle, rightPaddle, upPressed, downPressed) {
 
         // Draw ball.
         context.beginPath();
@@ -35,25 +35,62 @@ class Circle {
         // Left Paddle collision
         if (this.x + this.dx < paddleWidth) {
             if (this.y > leftPaddle.y && this.y < leftPaddle.y + paddleHeight) {
+                
+                if (upPressed) {
+                    this.dx -= (this.dx - 1 == 0) ? 0 : 1;
+                    this.dy += -1;
+                }
+                else if (downPressed) {
+                    this.dx -= (this.dx - 1 == 0) ? 0 : 1;
+                    this.dy += 1;
+                }
+                else {
+                    this.dx += (this.dx + 1 == 0) ? 0 : 1;
+                    if (this.dy > 0) {
+                        this.dy -= (this.dy == 0) ? 0 : 1;
+                    }
+                    else {
+                        this.dy += (this.dy == 0) ? 0 : 1;
+                    }
+                }
                 this.dx = -(this.dx);
             }
             else if (this.x + this.dx < 0 - this.radius){
                 this.x = canvasWidth / 2;
                 this.y = canvasHeight / 2;
-                this.dy = -(this.dy);
-                // left point
+                this.dx = 2;
+                this.dy = 0;
+                scoreRight++;
+                divRigthScore.textContent = scoreRight;
             }
         }
         
         // Right Paddle collsioin
         if (this.x + this.dx > canvasWidth - paddleWidth ) {
             if (this.y > rightPaddle.y && this.y < rightPaddle.y + paddleHeight) {
+
+                if (this.y % 3 == 0) {
+                    this.dx += .5;
+                    this.dy += 1;
+                }
+                else if (this.y % 4 == 0) {
+                    this.dx += 1;
+                    this.dy -= 2;
+                }
+                else if (this.y % 5 == 0) {
+                    this.dx -= .5;
+                    this.dy += 1;
+                }
                 this.dx = -(this.dx);
+
             }
             else if (this.x + this.dx > canvasWidth + this.radius) {
                 this.x = canvasWidth / 2;
                 this.y = canvasHeight / 2;
-                this.dy = -(this.dy);
+                this.dx = -2;
+                this.dy = 0;
+                scoreLeft++;
+                divLeftScore.textContent = scoreLeft;
             }
         }
 
@@ -76,10 +113,10 @@ class Square {
     renderPlayer(context, upPressed, downPressed) {
 
         if (upPressed && (this.y > 0)) {
-            this.y -= 3;
+            this.y -= 2;
         }
         else if (downPressed && (this.y < canvasHeight - paddleHeight)) {
-            this.y += 3;
+            this.y += 2;
         }
 
         context.beginPath();
@@ -117,7 +154,7 @@ var canvas = document.createElement('canvas');
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
     
-    var context = canvas.getContext("2d");
+var context = canvas.getContext("2d");
 //===============================================================================================
 
 
@@ -127,6 +164,8 @@ var blue = "#0095DD";
 var paddleHeight = canvasHeight / 6;
 var paddleWidth = canvasWidth / 60;
 var paddleY = (canvasHeight - paddleHeight) / 2;
+var scoreLeft = 0;
+var scoreRight = 0;
 
 
 var ball = new Circle(canvasWidth / 2, canvasHeight / 2, 6, blue);
@@ -175,15 +214,20 @@ function keyUpHandler(e) {
 
 // Execute Game
 //===============================================================================================
-document.body.appendChild(canvas);
+var div = document.getElementById("pong");
+var divLeftScore = document.getElementById("leftScore");
+var divRigthScore = document.getElementById("rightScore");
+divLeftScore.textContent = scoreLeft;
+divRigthScore.textContent = scoreRight;
+div.appendChild(canvas);
 
 
 
 function draw() {
     context.clearRect(0, 0, canvasWidth, canvasHeight);
-    ball.render(context, playerPaddle, aiPaddle);
-    //playerPaddle.renderPlayer(context, upPressed, downPressed);
-    playerPaddle.renderAi(context, ball);
+    ball.render(context, playerPaddle, aiPaddle, upPressed, downPressed);
+    playerPaddle.renderPlayer(context, upPressed, downPressed);
+    //playerPaddle.renderAi(context, ball);
     aiPaddle.renderAi(context, ball);
     
 }
