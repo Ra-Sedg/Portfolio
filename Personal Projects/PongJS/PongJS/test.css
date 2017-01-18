@@ -5,17 +5,15 @@
 canvas {
     background: #eee;
     display: block;
-    margin: 0;
+    margin: 0 auto;
 }
 
 #scoreBoardLeft {
     padding-right: 1px;
-    width: 300px;
 }
 
 #scoreBoardRight {
     padding-left: 1px;
-    width: 300px:
 }
 
 #leftScore {
@@ -26,25 +24,16 @@ canvas {
     width: 35px !important;
 }
 
+
 .progress {
-   margin-bottom: 1px !important;
+    margin-bottom: 1px !important;
     margin-left: auto !important;
     margin-right: auto !important;
     height: 10px !important;
-    width: 300px;
-    padding-left: 0;
 }
-
-
 
 #pong {
-    padding: 0;
-    margin: 0;
-    width: 600px;
-}
+  border: 2px solid black;
+  height: 400px;
 
-.container {
-    width: 600px !important;
-    padding: 0;
 }
-

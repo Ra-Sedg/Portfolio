@@ -129,10 +129,10 @@ class Square {
     renderAi(context, ball) {
 
         if (this.y + (paddleHeight/2) > ball.y && (this.y > 0)) {
-            this.y -= 2;
+            this.y -= 1.5;
         }
         else if (this.y + (paddleHeight/2) < ball.y && (this.y < canvasHeight - paddleHeight)) {
-            this.y += 2;
+            this.y += 1.5;
         }
 
         context.beginPath();
@@ -154,7 +154,19 @@ var canvas = document.createElement('canvas');
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
     
-var context = canvas.getContext("2d");
+    var context = canvas.getContext("2d");
+
+    drawCourt = function () {
+
+        context.setLineDash([5, 3]);/*dashes are 5px and spaces are 3px*/
+        context.beginPath();
+        context.moveTo(canvasWidth / 2, 0);
+        context.lineTo(canvasWidth / 2, canvasHeight);
+        context.strokeStyle = blue;
+        context.stroke();
+        context.closePath();
+
+    }
 //===============================================================================================
 
 
@@ -225,10 +237,13 @@ div.appendChild(canvas);
 
 function draw() {
     context.clearRect(0, 0, canvasWidth, canvasHeight);
+    drawCourt();
     ball.render(context, playerPaddle, aiPaddle, upPressed, downPressed);
     playerPaddle.renderPlayer(context, upPressed, downPressed);
     //playerPaddle.renderAi(context, ball);
     aiPaddle.renderAi(context, ball);
+
+   
     
 }
 
