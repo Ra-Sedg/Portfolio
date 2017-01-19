@@ -61,6 +61,10 @@ class Circle {
                 this.dx = 2;
                 this.dy = 0;
                 scoreRight++;
+                if (scoreRight > 10) {
+                    scoreRight = 0;
+                }
+                rightProgressbar.style.width = (scoreRight * 10) + "%";
                 divRigthScore.textContent = scoreRight;
             }
         }
@@ -90,6 +94,12 @@ class Circle {
                 this.dx = -2;
                 this.dy = 0;
                 scoreLeft++;
+
+                
+                if (scoreLeft > 10) {
+                    socreLeft = 0;
+                }
+                leftProgressBar.style.width = (scoreLeft * 10) + "%";
                 divLeftScore.textContent = scoreLeft;
             }
         }
@@ -172,7 +182,7 @@ var canvas = document.createElement('canvas');
 
 // Game Tokens
 //===============================================================================================
-var blue = "#0095DD";
+var blue = "#518dc1";
 var paddleHeight = canvasHeight / 6;
 var paddleWidth = canvasWidth / 60;
 var paddleY = (canvasHeight - paddleHeight) / 2;
@@ -229,6 +239,8 @@ function keyUpHandler(e) {
 var div = document.getElementById("pong");
 var divLeftScore = document.getElementById("leftScore");
 var divRigthScore = document.getElementById("rightScore");
+var leftProgressBar = document.getElementById("leftProgressBar");
+var rightProgressbar = document.getElementById("rightProgressBar");
 divLeftScore.textContent = scoreLeft;
 divRigthScore.textContent = scoreRight;
 div.appendChild(canvas);
