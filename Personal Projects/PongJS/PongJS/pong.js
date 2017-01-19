@@ -1,6 +1,6 @@
 ﻿
 
-    
+
 // Classes
 //===============================================================================================
 class Circle {
@@ -28,14 +28,14 @@ class Circle {
         context.closePath();
 
         // Top and bottom collision
-        if (this.y + this.dx < this.radius || this.y + this.dy > canvasHeight - this.radius){
+        if (this.y + this.dx < this.radius || this.y + this.dy > canvasHeight - this.radius) {
             this.dy = -(this.dy);
         }
 
         // Left Paddle collision
         if (this.x + this.dx < paddleWidth) {
             if (this.y > leftPaddle.y && this.y < leftPaddle.y + paddleHeight) {
-                
+
                 if (upPressed) {
                     this.dx -= (this.dx - 1 == 0) ? 0 : 1;
                     this.dy += -1;
@@ -55,7 +55,7 @@ class Circle {
                 }
                 this.dx = -(this.dx);
             }
-            else if (this.x + this.dx < 0 - this.radius){
+            else if (this.x + this.dx < 0 - this.radius) {
                 this.x = canvasWidth / 2;
                 this.y = canvasHeight / 2;
                 this.dx = 2;
@@ -68,9 +68,9 @@ class Circle {
                 divRigthScore.textContent = scoreRight;
             }
         }
-        
+
         // Right Paddle collsioin
-        if (this.x + this.dx > canvasWidth - paddleWidth ) {
+        if (this.x + this.dx > canvasWidth - paddleWidth) {
             if (this.y > rightPaddle.y && this.y < rightPaddle.y + paddleHeight) {
 
                 if (this.y % 3 == 0) {
@@ -95,7 +95,7 @@ class Circle {
                 this.dy = 0;
                 scoreLeft++;
 
-                
+
                 if (scoreLeft > 10) {
                     socreLeft = 0;
                 }
@@ -131,17 +131,17 @@ class Square {
 
         context.beginPath();
         context.rect(this.x, this.y, this.width, this.height);
-        context.fillStyle = this.color; 
+        context.fillStyle = this.color;
         context.fill();
         context.closePath();
     }
 
     renderAi(context, ball) {
 
-        if (this.y + (paddleHeight/2) > ball.y && (this.y > 0)) {
+        if (this.y + (paddleHeight / 2) > ball.y && (this.y > 0)) {
             this.y -= 1.5;
         }
-        else if (this.y + (paddleHeight/2) < ball.y && (this.y < canvasHeight - paddleHeight)) {
+        else if (this.y + (paddleHeight / 2) < ball.y && (this.y < canvasHeight - paddleHeight)) {
             this.y += 1.5;
         }
 
@@ -160,23 +160,23 @@ var canvasHeight = 300;
 var canvasWidth = 600;
 
 var canvas = document.createElement('canvas');
-    canvas.id = "myCanvas";
-    canvas.width = canvasWidth;
-    canvas.height = canvasHeight;
-    
-    var context = canvas.getContext("2d");
+canvas.id = "myCanvas";
+canvas.width = canvasWidth;
+canvas.height = canvasHeight;
 
-    drawCourt = function () {
+var context = canvas.getContext("2d");
 
-        context.setLineDash([5, 3]);/*dashes are 5px and spaces are 3px*/
-        context.beginPath();
-        context.moveTo(canvasWidth / 2, 0);
-        context.lineTo(canvasWidth / 2, canvasHeight);
-        context.strokeStyle = blue;
-        context.stroke();
-        context.closePath();
+drawCourt = function () {
 
-    }
+    context.setLineDash([5, 3]);/*dashes are 5px and spaces are 3px*/
+    context.beginPath();
+    context.moveTo(canvasWidth / 2, 0);
+    context.lineTo(canvasWidth / 2, canvasHeight);
+    context.strokeStyle = blue;
+    context.stroke();
+    context.closePath();
+
+}
 //===============================================================================================
 
 
@@ -255,8 +255,8 @@ function draw() {
     //playerPaddle.renderAi(context, ball);
     aiPaddle.renderAi(context, ball);
 
-   
-    
+
+
 }
 
 document.addEventListener("keydown", keyDownHandler, false);
