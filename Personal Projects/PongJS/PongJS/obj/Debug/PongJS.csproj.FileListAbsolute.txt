@@ -64,3 +64,36 @@ C:\Users\rased\Desktop\PongJS\PongJS\bin\Microsoft.CodeDom.Providers.DotNetCompi
 C:\Users\rased\Desktop\PongJS\PongJS\obj\Debug\PongJS.csprojResolveAssemblyReference.cache
 C:\Users\rased\Desktop\PongJS\PongJS\obj\Debug\PongJS.dll
 C:\Users\rased\Desktop\PongJS\PongJS\obj\Debug\PongJS.pdb
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\ApplicationInsights.config
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\roslyn\csc.exe
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\roslyn\System.Collections.Immutable.dll
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\roslyn\System.Reflection.Metadata.dll
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\roslyn\vbc.exe
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\roslyn\VBCSCompiler.exe
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\roslyn\VBCSCompiler.exe.config
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\PongJS.dll.config
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\PongJS.dll
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\PongJS.pdb
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\Microsoft.AI.Agent.Intercept.dll
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\Microsoft.AI.DependencyCollector.dll
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\Microsoft.AI.PerfCounterCollector.dll
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\Microsoft.AI.ServerTelemetryChannel.dll
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\Microsoft.AI.Web.dll
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\Microsoft.AI.WindowsServer.dll
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\Microsoft.ApplicationInsights.dll
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\Microsoft.AI.DependencyCollector.xml
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\Microsoft.AI.ServerTelemetryChannel.xml
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\Microsoft.AI.Web.xml
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\Microsoft.AI.WindowsServer.xml
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\Microsoft.ApplicationInsights.xml
+D:\Portfolio\Personal Projects\PongJS\PongJS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\Portfolio\Personal Projects\PongJS\PongJS\obj\Debug\PongJS.dll
+D:\Portfolio\Personal Projects\PongJS\PongJS\obj\Debug\PongJS.pdb
+D:\Portfolio\Personal Projects\PongJS\PongJS\obj\Debug\PongJS.csprojResolveAssemblyReference.cache

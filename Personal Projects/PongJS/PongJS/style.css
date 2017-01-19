@@ -2,8 +2,13 @@
     padding: 0; margin: 0; 
 }
 
+<<<<<<< HEAD
 body {
     background: #afd7d5;
+=======
+body{
+    background: #acaeb6;
+>>>>>>> 205728e21d179a7571ae9afb1860ba8040422fd5
 }
 
 canvas {
@@ -50,5 +55,6 @@ canvas {
 .container {
     width: 600px !important;
     padding: 0;
+    margin-top: 12%;
 }
 
