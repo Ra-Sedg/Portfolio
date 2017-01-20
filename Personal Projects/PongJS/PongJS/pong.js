@@ -213,23 +213,35 @@ var aiPaddle = new Square(
 //===============================================================================================
 var downPressed = false;
 var upPressed = false;
+var paused = false;
 
 function keyDownHandler(e) {
-    if (e.keyCode == 83) {
-        downPressed = true;
+
+    switch (e.keyCode) {
+        case 83:
+            downPressed = true;
+            break;
+        case 87:
+            upPressed = true;
+            break;
+        case 80:
+            paused = !paused;
+            break;
     }
-    else if (e.keyCode == 87) {
-        upPressed = true;
-    }
+
 }
 
 function keyUpHandler(e) {
-    if (e.keyCode == 83) {
-        downPressed = false;
+
+    switch (e.keyCode) {
+        case 83:
+            downPressed = false;
+            break;
+        case 87:
+            upPressed = false;
+            break;
     }
-    else if (e.keyCode == 87) {
-        upPressed = false;
-    }
+
 }
 //===============================================================================================
 
@@ -246,17 +258,15 @@ divRigthScore.textContent = scoreRight;
 div.appendChild(canvas);
 
 
-
 function draw() {
-    context.clearRect(0, 0, canvasWidth, canvasHeight);
-    drawCourt();
-    ball.render(context, playerPaddle, aiPaddle, upPressed, downPressed);
-    playerPaddle.renderPlayer(context, upPressed, downPressed);
-    //playerPaddle.renderAi(context, ball);
-    aiPaddle.renderAi(context, ball);
 
-
-
+    if (!paused) {
+        context.clearRect(0, 0, canvasWidth, canvasHeight);
+        drawCourt();
+        ball.render(context, playerPaddle, aiPaddle, upPressed, downPressed);
+        playerPaddle.renderPlayer(context, upPressed, downPressed);
+        aiPaddle.renderAi(context, ball);
+    }
 }
 
 document.addEventListener("keydown", keyDownHandler, false);
