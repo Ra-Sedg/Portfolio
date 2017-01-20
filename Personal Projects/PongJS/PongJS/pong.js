@@ -61,9 +61,11 @@ class Circle {
                 this.dx = 2;
                 this.dy = 0;
                 scoreRight++;
-                if (scoreRight > 10) {
-                    scoreRight = 0;
+
+                if (scoreRight == 10) {
+                    gameOver(false);
                 }
+
                 rightProgressbar.style.width = (scoreRight * 10) + "%";
                 divRigthScore.textContent = scoreRight;
             }
@@ -95,10 +97,10 @@ class Circle {
                 this.dy = 0;
                 scoreLeft++;
 
-
-                if (scoreLeft > 10) {
-                    socreLeft = 0;
+                if (scoreLeft == 10) {
+                    gameOver(true);
                 }
+
                 leftProgressBar.style.width = (scoreLeft * 10) + "%";
                 divLeftScore.textContent = scoreLeft;
             }
@@ -243,6 +245,53 @@ function keyUpHandler(e) {
     }
 
 }
+
+function gameOver(winner) {
+    paused = true;
+
+    console.log(winner);
+    if (winner) {
+        context.font = "30px Areal";
+        context.fillText("You Win", 10, 50);
+    }
+    else {
+        context.font = "30px Areal";
+        context.fillText("You Lose", 10, 50);
+    }   
+}
+
+var newGame = function () {
+    scoreLeft = 0;
+    scoreRight = 0;
+    divLeftScore.textContent = scoreLeft;
+    divRigthScore.textContent = scoreRight
+    leftProgressBar.style.width = (scoreLeft * 10) + "%";
+    rightProgressbar.style.width = (scoreRight * 10) + "%";
+
+    ball = new Circle(canvasWidth / 2, canvasHeight / 2, 6, blue);
+
+    playerPaddle = new Square(
+        0,
+        paddleY,
+        paddleWidth,
+        paddleHeight,
+        blue
+        );
+
+    aiPaddle = new Square(
+        canvasWidth - paddleWidth,
+        paddleY,
+        paddleWidth,
+        paddleHeight,
+        blue
+        );
+}
+
+// New Game
+$("#newGame").click(function () {  
+    newGame();
+    paused = false;
+});
 //===============================================================================================
 
 
@@ -257,6 +306,7 @@ divLeftScore.textContent = scoreLeft;
 divRigthScore.textContent = scoreRight;
 div.appendChild(canvas);
 
+newGame();
 
 function draw() {
 
