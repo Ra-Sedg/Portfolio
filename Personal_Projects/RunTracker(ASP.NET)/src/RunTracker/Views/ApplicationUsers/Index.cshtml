@@ -1,0 +1,59 @@
+@model RunTracker.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Profile</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Email
+            </th>
+            <th>
+                First Name
+            </th>
+            <th>
+                Last Name
+            </th>
+            <th>
+                Phone Number
+            </th>
+            <th>
+                Age
+            </th>
+            <th>
+                User Name
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.PhoneNumber)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Age)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.UserName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+            </td>
+        </tr>
+    </tbody>
+</table>

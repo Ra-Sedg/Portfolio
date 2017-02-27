@@ -1,2 +1,0 @@
-Responsive Photography Web Page built using a mobile first approach. Features several photography 
-from my recent trip to Acadia, Main.
