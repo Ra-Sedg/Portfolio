@@ -1,6 +1,6 @@
 ﻿$(function () {
 
-    var zipcode;
+    var query;
     console.log("site.js loaded");
 
     navigator.permissions.query({ name: 'geolocation' })
@@ -20,28 +20,51 @@
                         lattitude + "," + longitude + ".json", function () { })
                         .done(function (data) {
 
-                            zipcode = data.location.zip;
-                            console.log(zipcode);
-                            getWeather(zipcode);
+                            query = data.location.zip;
+                            console.log(query);
+                            getWeather(query);
 
                         });
                 });
             }
 
-            $('#zip_input').keypress(function (e) {
+            $('#query_input').keypress(function (e) {
 
-                zipcode = $("#zip_input").val();
+                query = $("#query_input").val();
 
                 /* Enter was pressed */
                 if (e.which === 13) {
-                    console.log(zipcode);
-                    getWeather(zipcode);
+                    console.log(query);
+                    getWeather(query);
                 } else {
+                    if (query.length >= 3) {
 
-                    $.getJSON("http://autocomplete.wunderground.com/aq?query=" + zipcode + "&cb=?", function () {
-                    }).done(function (result) {
-                        console.log(result);
-                    });
+                        $.getJSON("http://autocomplete.wunderground.com/aq?query=" + query + "&cb=?", function () { })
+                            .done(function (data) {
+                                console.log(data);
+                                var resultCount = data.RESULTS.length
+                            
+                                $("#location_list").empty();
+                                for (i = 0; i <= resultCount; i++) {
+                                    if (i > 4) {
+                                        break;
+                                    }
+                                    var name = data.RESULTS[i].name;
+                                    $("#location_list").append("<option>" + name + "</option>");
+                                }
+
+                                $("#query_input").on("input", function () {
+                                    var selection = $(this).val();
+                                    for (i = 0; i < resultCount; i++) {
+                                        if (selection == data.RESULTS[i].name) {
+                                            getWeather(data.RESULTS[i].zmw);
+                                        }
+                                    }
+                                })
+
+                        });
+                    }
+                    
                     
 
                 }

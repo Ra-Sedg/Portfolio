@@ -24,9 +24,12 @@
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
                 <div class="navbar-form navbar-right">
-                    <div class="form-group">
-                        <input id="zip_input" type="text" class="form-control" placeholder="Search">
-                    </div>
+                    <form class="form-group">
+                        <input id="query_input" list="location_list" type="text" class="form-control" placeholder="Search">
+                        <datalist id="location_list">
+       
+                        </datalist>
+                    </form> 
                 </div>
             </div>
 
