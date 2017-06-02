@@ -25,9 +25,20 @@ textarea {
 
 
 
+/* Bootstrap Overrides
+---------------------------------------------*/
+body {
+    padding-top: 60px;
+}
+
 /* Custome CSS
 --------------------------------------------*/
+ul {
+    list-style: none;
+    padding-left: 0px;
+}
+
 .logo {
-    max-width: 100px;
+    max-width: 125px;
     padding-left: 5px;
 }

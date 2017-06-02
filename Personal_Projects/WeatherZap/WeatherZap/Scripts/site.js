@@ -9,7 +9,7 @@
             console.log(permissionStatus.state);
 
             /* geolocation is available */
-            if (permissionStatus.state == "granted" || permissionStatus.state == "prompt" ) {
+            if (permissionStatus.state === "granted" || permissionStatus.state === "prompt" ) {
 
                 navigator.geolocation.getCurrentPosition(function (position) {
 
@@ -29,14 +29,26 @@
             }
 
             $('#zip_input').keypress(function (e) {
-                if (e.which == 13) {
-                    zipcode = $("#zip_input").val();
+
+                zipcode = $("#zip_input").val();
+
+                /* Enter was pressed */
+                if (e.which === 13) {
                     console.log(zipcode);
                     getWeather(zipcode);
+                } else {
+
+                    $.getJSON("http://autocomplete.wunderground.com/aq?query=" + zipcode + "&cb=?", function () {
+                    }).done(function (result) {
+                        console.log(result);
+                    });
+                    
+
                 }
             });
 
         });
+
 
     function getWeather(zipcode) {
 
