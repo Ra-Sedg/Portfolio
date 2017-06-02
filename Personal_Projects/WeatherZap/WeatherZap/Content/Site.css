@@ -22,3 +22,12 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+
+/* Custome CSS
+--------------------------------------------*/
+.logo {
+    max-width: 100px;
+    padding-left: 5px;
+}
