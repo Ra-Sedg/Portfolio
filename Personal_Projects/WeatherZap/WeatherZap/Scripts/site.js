@@ -1,8 +1,8 @@
 ﻿$(function () {
 
     var query;
-    console.log("site.js loaded");
 
+    /* Query HTML 5 geolcation permission */
     navigator.permissions.query({ name: 'geolocation' })
         .then(function (permissionStatus) {
 
@@ -19,55 +19,53 @@
                     $.getJSON("http://api.wunderground.com/api/8e2d1db7242415ea/geolookup/q/" +
                         lattitude + "," + longitude + ".json", function () { })
                         .done(function (data) {
-
                             query = data.location.zip;
-                            console.log(query);
                             getWeather(query);
-
-                        });
+                    });
                 });
             }
 
+            /* Auto complete location query */
             $('#query_input').keypress(function (e) {
 
                 query = $("#query_input").val();
+         
+                if (query.length > 3) {
 
-                /* Enter was pressed */
-                if (e.which === 13) {
-                    console.log(query);
-                    getWeather(query);
-                } else {
-                    if (query.length >= 3) {
+                    $.getJSON("http://autocomplete.wunderground.com/aq?query=" + query + "&cb=?", function () { })
+                        .done(function (data) {
 
-                        $.getJSON("http://autocomplete.wunderground.com/aq?query=" + query + "&cb=?", function () { })
-                            .done(function (data) {
-                                console.log(data);
-                                var resultCount = data.RESULTS.length
+                            var resultCount = data.RESULTS.length
                             
-                                $("#location_list").empty();
-                                for (i = 0; i <= resultCount; i++) {
-                                    if (i > 4) {
-                                        break;
-                                    }
-                                    var name = data.RESULTS[i].name;
-                                    $("#location_list").append("<option>" + name + "</option>");
+                            $("#location_list").empty();
+
+                            for (i = 0; i <= resultCount; i++) {
+
+                                if (i > 4) 
+                                    break;
+                                
+                                var locationName = data.RESULTS[i].name;
+
+                                $("#location_list").append("<option>" + locationName + "</option>");
+
+                            }
+
+                            $("#query_input").on("input", function () {
+
+                                var selection = $(this).val();
+
+                                for (i = 0; i < resultCount; i++) {
+
+                                    if (selection === data.RESULTS[i].name) 
+                                        getWeather(data.RESULTS[i].zmw);
+
                                 }
+                            })
 
-                                $("#query_input").on("input", function () {
-                                    var selection = $(this).val();
-                                    for (i = 0; i < resultCount; i++) {
-                                        if (selection == data.RESULTS[i].name) {
-                                            getWeather(data.RESULTS[i].zmw);
-                                        }
-                                    }
-                                })
-
-                        });
-                    }
-                    
-                    
-
+                    });
                 }
+                    
+         
             });
 
         });
