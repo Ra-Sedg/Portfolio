@@ -73,6 +73,8 @@
 
     function getWeather(zipcode) {
 
+
+        // Conditions
         $.get("http://api.wunderground.com/api/8e2d1db7242415ea/conditions/q/" +
             zipcode + ".json", function () { })
             .done(function (data) {
@@ -83,12 +85,31 @@
                     data.current_observation.display_location.city + ", " +
                     data.current_observation.display_location.state);
 
-                $("#temp_f").text("Tempurature: " + data.current_observation.temp_f +
-                    String.fromCharCode(176));
+                $("#temp_f").text("Tempurature: " + data.current_observation.temperature_string);
+
+                $("#temp_feel").text("Feels Like: " + data.current_observation.feelslike_string);
 
                 $("#forcast_img").attr("src", data.current_observation.icon_url);
 
                 $("#forcast_text").text(data.current_observation.icon);
+            });
+
+
+        //Forcast
+        $.get("http://api.wunderground.com/api/8e2d1db7242415ea/forecast10day/q/" +
+            zipcode + ".json", function () { })
+            .done(function (data) {
+
+                console.log(data);
+
+                for (i = 0; i < 10; i++) {
+                    $("#ten_day_forecast").append("<div>" +
+                        data.forecast.simpleforecast.forecastday[i].date.monthname + ", " +
+                        data.forecast.simpleforecast.forecastday[i].date.day + " - " + 
+                        data.forecast.txt_forecast.forecastday[i].fcttext
+                    );
+                }
+
             });
 
     }
