@@ -67,7 +67,18 @@
                     
          
             });
+           
+            $(document).on("mouseenter", "li.cell", function () {
+                $(this).addClass("cell_focus")
+            });
 
+            $(document).on("mouseleave", "li.cell", function () {
+                $(this).removeClass("cell_focus");
+            });
+
+
+
+     
         });
 
 
@@ -95,20 +106,29 @@
             });
 
 
-        //Forcast
+        // Forcast
         $.get("http://api.wunderground.com/api/8e2d1db7242415ea/forecast10day/q/" +
             zipcode + ".json", function () { })
             .done(function (data) {
 
                 console.log(data);
 
+                $("#ten_day_forecast").empty();
+
                 for (i = 0; i < 10; i++) {
-                    $("#ten_day_forecast").append("<div>" +
+                    $("#ten_day_forecast").append("<li class='cell'></li>");
+
+
+                    $("#ten_day_forecast li")
+                        .last()
+                        .append("<p class='text-center'>" +
+                        data.forecast.simpleforecast.forecastday[i].date.weekday + "</p>")
+                        .append("<p>" +
                         data.forecast.simpleforecast.forecastday[i].date.monthname + ", " +
-                        data.forecast.simpleforecast.forecastday[i].date.day + " - " + 
-                        data.forecast.txt_forecast.forecastday[i].fcttext
-                    );
+                        data.forecast.simpleforecast.forecastday[i].date.day)
+                        .append('<img src="' + data.forecast.simpleforecast.forecastday[i].icon_url + '" />')
                 }
+
 
             });
 

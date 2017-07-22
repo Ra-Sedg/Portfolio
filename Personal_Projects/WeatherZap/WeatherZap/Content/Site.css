@@ -25,12 +25,17 @@ textarea {
 
 
 
+
 /* Bootstrap Overrides
 ---------------------------------------------*/
 body {
     padding-top: 60px;
 }
 
+#ten_day_forecast li {
+    width: 10%;
+    text-align: center;
+}
 /* Custome CSS
 --------------------------------------------*/
 ul {
@@ -42,3 +47,9 @@ ul {
     max-width: 125px;
     padding-left: 5px;
 }
+
+.cell_focus {
+    background-color: Highlight;
+}
+
+
