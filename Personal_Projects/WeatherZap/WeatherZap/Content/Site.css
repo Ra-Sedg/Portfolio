@@ -42,7 +42,7 @@ body {
 
 body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
     overflow: hidden !important;
-    
+    padding-right: 0 !important
 }
 /* Custome CSS
 --------------------------------------------*/
