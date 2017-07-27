@@ -67,7 +67,9 @@
                     
          
             });
-           
+
+
+            // Highlight Forcast Cell on Hover
             $(document).on("mouseenter", "li.cell", function () {
                 $(this).addClass("cell_focus")
             });
@@ -76,7 +78,8 @@
                 $(this).removeClass("cell_focus");
             });
 
-
+            
+   
 
      
         });
@@ -116,7 +119,7 @@
                 $("#ten_day_forecast").empty();
 
                 for (i = 0; i < 10; i++) {
-                    $("#ten_day_forecast").append("<li class='cell'></li>");
+                    $("#ten_day_forecast").append("<li type='button' class='cell btn btn- info btn- lg' data-toggle='modal' data-target='#forcastModal'></li>");
 
 
                     $("#ten_day_forecast li")
