@@ -23,7 +23,7 @@
                         .done(function (data) {
                             query = data.location.zip;
                             getWeather(query);
-
+                            updateModel(index, query);
 
                             
                           
@@ -98,7 +98,7 @@ function updateModel(index, zipcode) {
             var day;
             day = data.forecast.simpleforecast.forecastday[index].date.weekday + " ";
             day += data.forecast.simpleforecast.forecastday[index].date.monthname + " ";
-            day += data.forecast.simpleforecast.forecastday["0"].date.day;
+            day += data.forecast.simpleforecast.forecastday[index].date.day;
             $('.modal-title').text(day).css("font-weight", "bold");
 
             var forcastText = data.forecast.txt_forecast.forecastday[index].fcttext
